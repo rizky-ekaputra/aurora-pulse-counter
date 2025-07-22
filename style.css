@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.aurora-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #6ef3ff33, #004466);
+  transition: background-position 0.3s ease;
+  z-index: -2;
+}
+
+.starfield {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.imgur.com/3Kc0g5N.png') repeat;
+  animation: stars 100s linear infinite;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+@keyframes stars {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 10000px; }
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}
+
+.developed-by {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.counter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.counter-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #00ffc3;
+  color: black;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: transform 0.2s;
+}
+
+.counter-circle.bounce {
+  animation: bounce 0.3s;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.count-button {
+  background: #ffffffaa;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.count-button:hover {
+  background: white;
+}

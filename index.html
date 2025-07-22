@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Pulse Counter</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="aurora-background" :style="{ backgroundPosition: `${mouseX}% ${mouseY}%` }"></div>
+    <div class="starfield"></div>
+
+    <h1 class="title">Aurora Pulse Counter</h1>
+    <p class="developed-by">Developed by: Rizky</p>
+
+    <div class="counter-container">
+      <div
+        class="counter-circle"
+        :class="{ bounce }"
+        @animationend="bounce = false"
+      >
+        {{ count }}
+      </div>
+      <button class="count-button" @click="increment">Pulse!</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
