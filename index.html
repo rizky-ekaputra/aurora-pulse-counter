@@ -260,6 +260,7 @@
         {{ count }}
       </div>
       <button class="count-button" @click="increment">Pulse +</button>
+      <button class="count-button" @click="reset" style="margin-left: 10px;">Reset</button>
     </div>
 
     <!--<div class="music-widget">
@@ -281,49 +282,54 @@
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script>
-    const { createApp, ref, onMounted } = Vue;
+     const { createApp, ref, onMounted } = Vue;
 
-    createApp({
-      setup() {
-        const count = ref(0);
-        const bounce = ref(false);
-        const mouseX = ref(0);
-        const mouseY = ref(0);
+  createApp({
+    setup() {
+      const count = ref(0);
+      const bounce = ref(false);
+      const mouseX = ref(0);
+      const mouseY = ref(0);
 
-        function increment() {
-          count.value++;
-          bounce.value = true;
-        }
+      function increment() {
+        count.value++;
+        bounce.value = true;
+      }
 
-        function updateMouse(e) {
-          const centerX = window.innerWidth / 2;
-          const centerY = window.innerHeight / 2;
-          const offsetX = (e.clientX - centerX) * 0.02;
-          const offsetY = (e.clientY - centerY) * 0.02;
-          mouseX.value = offsetX;
-          mouseY.value = offsetY;
-        }
+      function reset() {
+        count.value = 0;
+      }
 
-        onMounted(() => {
-          window.addEventListener('mousemove', updateMouse);
-        });
+      function updateMouse(e) {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const offsetX = (e.clientX - centerX) * 0.02;
+        const offsetY = (e.clientY - centerY) * 0.02;
+        mouseX.value = offsetX;
+        mouseY.value = offsetY;
+      }
 
-        return {
-          count,
-          bounce,
-          mouseX,
-          mouseY,
-          increment,
-          updateMouse,
-        };
-      },
-    }).mount('#app');
+      onMounted(() => {
+        window.addEventListener('mousemove', updateMouse);
+      });
 
-    // Theme toggle button
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-    });
+      return {
+        count,
+        bounce,
+        mouseX,
+        mouseY,
+        increment,
+        reset,
+        updateMouse,
+      };
+    },
+  }).mount('#app');
+
+  // Theme toggle button
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+  });
   </script>
 </body>
 </html>
