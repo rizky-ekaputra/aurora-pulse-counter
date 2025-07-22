@@ -5,7 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aurora Pulse Counter</title>
   <style>
-    /* Paste your entire CSS here - keep it exactly the same but remove scoped */
+    /* CSS variables for theming */
+    :root {
+      --bg-color: #000;
+      --text-color: #fff;
+      --accent-color: aqua;
+      --circle-bg: rgba(255, 255, 255, 0.05);
+      --border-color: white;
+      --project-bg: rgba(255, 255, 255, 0.05);
+      --project-border: rgba(255, 255, 255, 0.1);
+      --developed-by-color: #bbb;
+      --button-hover-bg: black;
+      --button-hover-color: white;
+    }
+    body.light-mode {
+      --bg-color: #fff;
+      --text-color: #000;
+      --accent-color: #007acc;
+      --circle-bg: rgba(0, 0, 0, 0.05);
+      --border-color: #000;
+      --project-bg: rgba(0, 0, 0, 0.05);
+      --project-border: rgba(0, 0, 0, 0.1);
+      --developed-by-color: #555;
+      --button-hover-bg: #007acc;
+      --button-hover-color: #fff;
+    }
+
     .starry-background {
       position: absolute;
       width: 100%;
@@ -24,12 +49,12 @@
       width: 2px;
       height: 2px;
       border-radius: 50%;
-      background: white;
+      background: var(--text-color);
       box-shadow:
-       10vw 10vh white, 20vw 30vh white, 50vw 80vh white,
-        70vw 20vh white, 90vw 60vh white, 30vw 40vh white,
-        60vw 10vh white, 80vw 90vh white, 15vw 75vh white,
-        45vw 15vh white, 25vw 65vh white, 85vw 35vh white;
+        10vw 10vh var(--text-color), 20vw 30vh var(--text-color), 50vw 80vh var(--text-color),
+        70vw 20vh var(--text-color), 90vw 60vh var(--text-color), 30vw 40vh var(--text-color),
+        60vw 10vh var(--text-color), 80vw 90vh var(--text-color), 15vw 75vh var(--text-color),
+        45vw 15vh var(--text-color), 25vw 65vh var(--text-color), 85vw 35vh var(--text-color);
       animation: twinkle 2s infinite ease-in-out;
     }
 
@@ -47,13 +72,14 @@
         opacity: 0.3;
       }
     }
+
     .app {
       position: relative;
       overflow: hidden;
       min-height: 100vh;
-      color: #fff;
+      color: var(--text-color);
       font-family: 'Segoe UI', sans-serif;
-      background: #000;
+      background: var(--bg-color);
       padding: 40px 20px;
       text-align: center;
     }
@@ -67,4 +93,237 @@
       pointer-events: none;
       z-index: 0;
       background:
-       radial-gradient(circle at 30% 30%, rgba(0, 254, 186, 0.3), transparent 40%),
+        radial-gradient(circle at 30% 30%, rgba(0, 254, 186, 0.3), transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(91, 134, 229, 0.3), transparent 40%),
+        radial-gradient(circle at 50% 5%, rgba(255, 0, 255, 0.25), transparent 60%);
+      filter: blur(80px);
+      animation: 20s ease-in-out infinite;
+    }
+
+    .starfield {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: repeating-radial-gradient(var(--text-color) 1px, transparent 2px);
+      background-size: 5px 5px;
+      opacity: 0.2;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .developed-by {
+      font-size: 1rem;
+      color: var(--developed-by-color);
+      margin-bottom: 30px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .counter-container {
+      z-index: 2;
+      position: relative;
+    }
+
+    .counter-circle {
+      width: 120px;
+      height: 120px;
+      background: var(--circle-bg);
+      border: 3px solid var(--border-color);
+      border-radius: 50%;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    .bounce {
+      animation: bounce 0.3s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3),
+                    inset 0 0 10px rgba(0, 255, 255, 0.1);
+      }
+      100% {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.5),
+                    inset 0 0 20px rgba(0, 255, 255, 0.3);
+      }
+    }
+
+    .count-button {
+      background-color: var(--accent-color);
+      border: none;
+      color: black;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    body.light-mode .count-button {
+      color: var(--text-color);
+    }
+
+    .count-button:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-color);
+    }
+
+    .music-widget {
+      margin-top: 40px;
+      z-index: 2;
+      position: relative;
+      width: 100% !important;
+    }
+
+    .music-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .project-description {
+      margin-top: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 2;
+      position: relative;
+      background: var(--project-bg);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid var(--project-border);
+    }
+
+    /* Toggle button styling */
+    #themeToggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: var(--accent-color);
+      color: black;
+      z-index: 9999;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.light-mode #themeToggle {
+      color: var(--text-color);
+    }
+    #themeToggle:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-color);
+    }
+  </style>
+</head>
+<body>
+  <button id="themeToggle">Toggle Light/Dark</button>
+
+  <div id="app" class="app" @mousemove="updateMouse">
+    <div
+      class="aurora-layer"
+      :style="transform: translate(${mouseX}%, ${mouseY}%)"
+    ></div>
+
+    <!--<div class="starfield"></div>-->
+    <div class="starry-background">
+      <div class="stars"></div>
+    </div>
+
+    <h1 class="title">Aurora Pulse Counter</h1>
+    <p class="developed-by">Developed by: Rizky Ekaputra</p>
+
+    <div class="counter-container">
+      <div
+        :class="['counter-circle', bounce ? 'bounce' : '']"
+        @animationend="bounce = false"
+      >
+        {{ count }}
+      </div>
+      <button class="count-button" @click="increment">Pulse +</button>
+    </div>
+
+    <!--<div class="music-widget">
+      <p class="music-title">Now Playing:</p>
+      <audio controls>
+        <source src="your-music-file.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>-->
+
+    <div class="project-description">
+      <h2>About This Project</h2>
+      <p>
+        The Aurora Pulse Counter is a Space/Aurora inspired animated counter UI that reacts with a glowing aurora-themed background,
+        interactive mouse movement, and audio support. Built with Vue.js and designed by Rizky.
+      </p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        const count = ref(0);
+        const bounce = ref(false);
+        const mouseX = ref(0);
+        const mouseY = ref(0);
+
+        function increment() {
+          count.value++;
+          bounce.value = true;
+        }
+
+        function updateMouse(e) {
+          const centerX = window.innerWidth / 2;
+          const centerY = window.innerHeight / 2;
+          const offsetX = (e.clientX - centerX) * 0.02;
+          const offsetY = (e.clientY - centerY) * 0.02;
+          mouseX.value = offsetX;
+          mouseY.value = offsetY;
+        }
+
+        onMounted(() => {
+          window.addEventListener('mousemove', updateMouse);
+        });
+
+        return {
+          count,
+          bounce,
+          mouseX,
+          mouseY,
+          increment,
+          updateMouse,
+        };
+      },
+    }).mount('#app');
+
+    // Theme toggle button
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
+  </script>
+</body>
+</html>
