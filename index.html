@@ -104,9 +104,9 @@ body, #app {
   background: white;
   border-radius: 50%;
   box-shadow: 0 0 10px 3px white;
-  transform: rotate(45deg);
   animation: starFall 6s linear infinite;
   opacity: 0;
+  transform: rotate(135deg); /* Angle toward 7 o'clock */
 }
 
 .falling-star::after {
@@ -116,20 +116,21 @@ body, #app {
   left: 0;
   width: 100px;
   height: 2px;
-  background: linear-gradient(to right, white, transparent);
+  background: linear-gradient(to left, white, transparent);
+  transform: rotate(-45deg); /* Trail points toward 1 o'clock */
   opacity: 0.6;
 }
 
 @keyframes starFall {
   0% {
-    transform: translate(0, 0) rotate(45deg);
+    transform: translate(0, 0) rotate(135deg);
     opacity: 0;
   }
   10% {
     opacity: 1;
   }
   100% {
-    transform: translate(-500px, 500px) rotate(45deg);
+    transform: translate(-500px, 500px) rotate(135deg); /* Move from top-right to bottom-left */
     opacity: 0;
   }
 }
