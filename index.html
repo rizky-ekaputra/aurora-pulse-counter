@@ -105,7 +105,7 @@ body, #app {
   border-radius: 50%;
   box-shadow: 0 0 10px 3px white;
   animation: starFall 6s linear infinite;
-  opacity: 0;
+  opacity: 0.8;
   transform: rotate(135deg); /* Angle toward 7 o'clock */
 }
 
@@ -117,8 +117,8 @@ body, #app {
   width: 100px;
   height: 2px;
   background: linear-gradient(to left, white, transparent);
-  transform: rotate(-45deg); /* Trail points toward 1 o'clock */
-  opacity: 0.6;
+  transform: rotate(-6 deg); /* Trail points toward 1 o'clock */
+  opacity: 0.2;
 }
 
 @keyframes starFall {
@@ -342,13 +342,14 @@ body, #app {
       <button class="count-button" @click="reset" style="margin-left: 10px;">Reset</button>
     </div>
 
-    <!--<div class="music-widget">
+    <div class="music-widget">
       <p class="music-title">Now Playing:</p>
-      <audio controls>
-        <source src="your-music-file.mp3" type="audio/mp3" />
-        Your browser does not support the audio element.
-      </audio>
-    </div>-->
+    <audio id="bg-music" autoplay loop controls>
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Synthwave/Synthwave_Goose.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+      
+    </div>
 
     <div class="project-description">
       <h2>About This Project</h2>
