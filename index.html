@@ -264,10 +264,10 @@
 
     <div class="counter-container">
   <div
-    :class="['counter-circle', bounce ? 'bounce' : '']"
-    @animationend="bounce = false"
-  >
-    {{ count }}
+  class="counter-circle"
+  :class="{ bounce: bounce }"
+  @animationend="bounce = false"
+  v-text="count"
   </div>
   <button class="count-button" @click="increment">Pulse +</button>
   <button class="count-button" @click="reset">Reset</button>
@@ -290,70 +290,57 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-  <script>
+ <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script>
+  const { createApp, ref, onMounted } = Vue;
 
-    function reset() {
-  count.value = 0;
-}
-    return {
-  count,
-  bounce,
-  mouseX,
-  mouseY,
-  increment,
-  reset, // ⬅ Add this
-  updateMouse,
-};
-    function reset() {
-  count.value = 0;
-  bounce.value = true;
-}
+  createApp({
+    setup() {
+      const count = ref(0);
+      const bounce = ref(false);
+      const mouseX = ref(0);
+      const mouseY = ref(0);
 
-    
-    const { createApp, ref, onMounted } = Vue;
+      function increment() {
+        count.value++;
+        bounce.value = true;
+      }
 
-    createApp({
-      setup() {
-        const count = ref(0);
-        const bounce = ref(false);
-        const mouseX = ref(0);
-        const mouseY = ref(0);
+      function reset() {
+        count.value = 0;
+        bounce.value = true;
+      }
 
-        function increment() {
-          count.value++;
-          bounce.value = true;
-        }
+      function updateMouse(e) {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const offsetX = (e.clientX - centerX) * 0.02;
+        const offsetY = (e.clientY - centerY) * 0.02;
+        mouseX.value = offsetX;
+        mouseY.value = offsetY;
+      }
 
-        function updateMouse(e) {
-          const centerX = window.innerWidth / 2;
-          const centerY = window.innerHeight / 2;
-          const offsetX = (e.clientX - centerX) * 0.02;
-          const offsetY = (e.clientY - centerY) * 0.02;
-          mouseX.value = offsetX;
-          mouseY.value = offsetY;
-        }
+      onMounted(() => {
+        window.addEventListener('mousemove', updateMouse);
+      });
 
-        onMounted(() => {
-          window.addEventListener('mousemove', updateMouse);
-        });
+      return {
+        count,
+        bounce,
+        mouseX,
+        mouseY,
+        increment,
+        reset,
+        updateMouse,
+      };
+    },
+  }).mount('#app');
 
-        return {
-          count,
-          bounce,
-          mouseX,
-          mouseY,
-          increment,
-          updateMouse,
-        };
-      },
-    }).mount('#app');
-
-    // Theme toggle button
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-    });
-  </script>
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+  });
+</script>
 </body>
 </html>
