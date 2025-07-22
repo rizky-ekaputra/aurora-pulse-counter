@@ -5,14 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aurora Pulse Counter</title>
   <style>
-  html, body {
-   margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
-  box-sizing: border-box;
-}
     /* CSS variables for theming */
     :root {
       --bg-color: #000;
@@ -90,8 +82,6 @@
       background: var(--bg-color);
       padding: 40px 20px;
       text-align: center;
-        width: 100%;
-      box-sizing: border-box;
     }
 
     .aurora-layer {
@@ -263,15 +253,14 @@
     <p class="developed-by">Developed by: Rizky Ekaputra</p>
 
     <div class="counter-container">
-  <div
-  class="counter-circle"
-  :class="{ bounce: bounce }"
-  @animationend="bounce = false"
-  v-text="count"
-  </div>
-  <button class="count-button" @click="increment">Pulse +</button>
-  <button class="count-button" @click="reset">Reset</button>
-</div>
+      <div
+        :class="['counter-circle', bounce ? 'bounce' : '']"
+        @animationend="bounce = false"
+      >
+        {{ count }}
+      </div>
+      <button class="count-button" @click="increment">Pulse +</button>
+    </div>
 
     <!--<div class="music-widget">
       <p class="music-title">Now Playing:</p>
@@ -290,57 +279,51 @@
     </div>
   </div>
 
- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-<script>
-  const { createApp, ref, onMounted } = Vue;
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+    const { createApp, ref, onMounted } = Vue;
 
-  createApp({
-    setup() {
-      const count = ref(0);
-      const bounce = ref(false);
-      const mouseX = ref(0);
-      const mouseY = ref(0);
+    createApp({
+      setup() {
+        const count = ref(0);
+        const bounce = ref(false);
+        const mouseX = ref(0);
+        const mouseY = ref(0);
 
-      function increment() {
-        count.value++;
-        bounce.value = true;
-      }
+        function increment() {
+          count.value++;
+          bounce.value = true;
+        }
 
-      function reset() {
-        count.value = 0;
-        bounce.value = true;
-      }
+        function updateMouse(e) {
+          const centerX = window.innerWidth / 2;
+          const centerY = window.innerHeight / 2;
+          const offsetX = (e.clientX - centerX) * 0.02;
+          const offsetY = (e.clientY - centerY) * 0.02;
+          mouseX.value = offsetX;
+          mouseY.value = offsetY;
+        }
 
-      function updateMouse(e) {
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const offsetX = (e.clientX - centerX) * 0.02;
-        const offsetY = (e.clientY - centerY) * 0.02;
-        mouseX.value = offsetX;
-        mouseY.value = offsetY;
-      }
+        onMounted(() => {
+          window.addEventListener('mousemove', updateMouse);
+        });
 
-      onMounted(() => {
-        window.addEventListener('mousemove', updateMouse);
-      });
+        return {
+          count,
+          bounce,
+          mouseX,
+          mouseY,
+          increment,
+          updateMouse,
+        };
+      },
+    }).mount('#app');
 
-      return {
-        count,
-        bounce,
-        mouseX,
-        mouseY,
-        increment,
-        reset,
-        updateMouse,
-      };
-    },
-  }).mount('#app');
-
-  // Theme toggle
-  const themeToggle = document.getElementById('themeToggle');
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-  });
-</script>
+    // Theme toggle button
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
+  </script>
 </body>
 </html>
