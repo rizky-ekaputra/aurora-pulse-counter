@@ -263,14 +263,15 @@
     <p class="developed-by">Developed by: Rizky Ekaputra</p>
 
     <div class="counter-container">
-      <div
-        :class="['counter-circle', bounce ? 'bounce' : '']"
-        @animationend="bounce = false"
-      >
-        {{ count }}
-      </div>
-      <button class="count-button" @click="increment">Pulse +</button>
-    </div>
+  <div
+    :class="['counter-circle', bounce ? 'bounce' : '']"
+    @animationend="bounce = false"
+  >
+    {{ count }}
+  </div>
+  <button class="count-button" @click="increment">Pulse +</button>
+  <button class="count-button" @click="reset">Reset</button>
+</div>
 
     <!--<div class="music-widget">
       <p class="music-title">Now Playing:</p>
@@ -291,6 +292,25 @@
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script>
+
+    function reset() {
+  count.value = 0;
+}
+    return {
+  count,
+  bounce,
+  mouseX,
+  mouseY,
+  increment,
+  reset, // ⬅ Add this
+  updateMouse,
+};
+    function reset() {
+  count.value = 0;
+  bounce.value = true;
+}
+
+    
     const { createApp, ref, onMounted } = Vue;
 
     createApp({
