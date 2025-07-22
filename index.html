@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aurora Pulse Counter</title>
   <style>
+  html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  box-sizing: border-box;
+}
     /* CSS variables for theming */
     :root {
       --bg-color: #000;
@@ -82,6 +90,8 @@
       background: var(--bg-color);
       padding: 40px 20px;
       text-align: center;
+        width: 100%;
+      box-sizing: border-box;
     }
 
     .aurora-layer {
