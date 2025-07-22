@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Aurora Pulse Counter</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/vue@3.4.15/dist/vue.global.prod.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <!-- Your Vue template -->
-      <div class="aurora-background"></div>
-      <div class="starfield"></div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Pulse Counter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="app" @mousemove="updateMouse">
+      <div
+        class="aurora-layer"
+        :style="{ transform: `translate(${mouseX}%, ${mouseY}%)` }"
+      ></div>
+
+      <!--<div class="starfield"></div>-->
+      <div class="starry-background">
+        <div class="stars"></div>
+      </div>
+
       <h1 class="title">Aurora Pulse Counter</h1>
-      <p class="developed-by">Developed by: Rizky</p>
+      <p class="developed-by">Developed by: Rizky Ekaputra</p>
 
       <div class="counter-container">
         <div :class="['counter-circle', bounce ? 'bounce' : '']" @animationend="bounce = false">
           {{ count }}
         </div>
-        <button class="count-button" @click="incrementCount">+</button>
+        <button class="count-button" @click="increment">Pulse +</button>
       </div>
 
-      <div class="music-widget">
-        <h3>Music Tracks</h3>
-        <audio controls v-for="track in tracks" :src="track.url" :key="track.url" preload="none"></audio>
+      <!--<div class="music-widget">
+        <p class="music-title">Now Playing:</p>
+        <audio controls>
+          <source src="your-music-file.mp3" type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>-->
+
+      <div class="project-description">
+        <h2>About This Project</h2>
+        <p>
+          The Aurora Pulse Counter is a Space/Aurora inspired animated counter UI that reacts with a glowing aurora-themed background,
+          interactive mouse movement, and audio support. Built with Vue.js and designed by Rizky.
+        </p>
       </div>
     </div>
+  </div>
 
-    <script src="app.js"></script>
-  </body>
+  <script src="app.js"></script>
+</body>
 </html>
