@@ -152,8 +152,12 @@ body, #app {
     }
 
     .counter-circle {
-      width: 120px;
-      height: 120px;
+      width: 30vw;
+  height: 30vw;
+  max-width: 120px;
+  max-height: 120px;
+  min-width: 80px;
+  min-height: 80px;
       background: var(--circle-bg);
       border: 3px solid var(--border-color);
       border-radius: 50%;
@@ -164,6 +168,8 @@ body, #app {
       justify-content: center;
       transition: transform 0.3s ease;
       animation: pulseGlow 2s infinite alternate;
+
+      
     }
 
     .bounce {
